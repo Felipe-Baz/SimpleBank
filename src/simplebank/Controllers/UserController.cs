@@ -51,7 +51,7 @@ namespace simplebank.Controllers
             }
         }
 
-        [HttpGet("/{id}")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<User>> DetailsAsync(
             int id
         )
@@ -85,7 +85,7 @@ namespace simplebank.Controllers
             }
         }
 
-        [HttpDelete("/{id}")]
+        [HttpDelete("{id}")]
         public async Task<ActionResult<User>> DeleteAsync(
             int id
         )
@@ -101,5 +101,6 @@ namespace simplebank.Controllers
                 return BadRequest(e.Message);
             }
         }
+
     }
 }
