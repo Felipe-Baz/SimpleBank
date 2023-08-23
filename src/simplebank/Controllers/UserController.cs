@@ -21,8 +21,8 @@ namespace simplebank.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<User>> CreatePostAsync(
-            [FromBody] User user
+        public async Task<ActionResult<UserResponseDTO>> CreateAsync(
+            [FromBody] UserCreateDTO user
         ) {
             try
             {
@@ -36,5 +36,70 @@ namespace simplebank.Controllers
             }
         }
 
+        [HttpGet]
+        public async Task<ActionResult<List<User>>> ListAsync()
+        {
+            try
+            {
+                return Ok(
+                    await _userFacade.ListAsync()
+                );
+            }
+            catch (ValidationException e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpGet("/{id}")]
+        public async Task<ActionResult<User>> DetailsAsync(
+            int id
+        )
+        {
+            try
+            {
+                return Ok(
+                    await _userFacade.DetailsAsync(id: id)
+                );
+            }
+            catch (ValidationException e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpPut]
+        public async Task<ActionResult<User>> UpdateAsync(
+            [FromBody] UserUpdateDTO user
+        )
+        {
+            try
+            {
+                return Ok(
+                    await _userFacade.UpdateAsync(user: user)
+                );
+            }
+            catch (ValidationException e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpDelete("/{id}")]
+        public async Task<ActionResult<User>> DeleteAsync(
+            int id
+        )
+        {
+            try
+            {
+                return Ok(
+                    await _userFacade.DeleteAsync(id: id)
+                );
+            }
+            catch (ValidationException e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
     }
 }

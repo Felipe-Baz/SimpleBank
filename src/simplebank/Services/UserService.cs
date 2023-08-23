@@ -1,4 +1,5 @@
 using simplebank.Exceptions;
+using simplebank.Extensions;
 using simplebank.Model;
 using simplebank.Repositories.Interfaces;
 using simplebank.Services.Interfaces;
@@ -19,7 +20,37 @@ namespace simplebank.Services
             if (user == null)
                 throw new ValidationException("User is null.");
 
+            user.SetCreated();
             _userRepository.Add(user);
+            await _userRepository.SaveChangesAsync();
+            var response = await _userRepository.GetByIdAsync(user.Id);
+            return response;
+        }
+
+        public async Task<User> DeleteAsync(int id)
+        {
+            var user = await _userRepository.GetByIdAsync(id);
+            _userRepository.Remove(user);
+            await _userRepository.SaveChangesAsync();
+            return user;
+        }
+
+        public async Task<User> DetailsAsync(int id)
+        {
+            var response = await _userRepository.GetByIdAsync(id);
+            return response;
+        }
+
+        public async Task<List<User>> ListAsync()
+        {
+            var response = await _userRepository.GetAllAsync();
+            return response.ToList();
+        }
+
+        public async Task<User> UpdateAsync(User user)
+        {
+            user.SetUpdate();
+            _userRepository.Update(user);
             await _userRepository.SaveChangesAsync();
             var response = await _userRepository.GetByIdAsync(user.Id);
             return response;
