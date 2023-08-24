@@ -19,7 +19,7 @@ namespace simplebank.Extensions
 
         public static void ValidateEmail(this User user)
         {
-            if (string.IsNullOrEmpty(user.Email))
+            if (string.IsNullOrWhiteSpace(user.Email))
                 throw new ValidationException("The Email is required.");
 
             if (!Regex.IsMatch(user.Email,
@@ -30,7 +30,7 @@ namespace simplebank.Extensions
 
         public static void ValidatePhoneNumber(this User user)
         {
-            if (string.IsNullOrEmpty(user.PhoneNumber))
+            if (string.IsNullOrWhiteSpace(user.PhoneNumber))
                 throw new ValidationException("The Phone Number is required.");
 
             // Remova quaisquer caracteres não numéricos do número de telefone

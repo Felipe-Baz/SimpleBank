@@ -1,4 +1,3 @@
-using simplebank.Exceptions;
 using simplebank.Extensions;
 
 namespace simplebank.UnitTest.Domain.Entities
@@ -26,12 +25,15 @@ namespace simplebank.UnitTest.Domain.Entities
             Assert.Equal(invalidEmailFormatErrorMessage, exception.Message);
         }
 
-        [Fact]
-        public void EmailRequiredTest()
+        [Theory]
+        [InlineData(null)]
+        [InlineData("")]
+        [InlineData("    ")]
+        public void EmailRequiredTest(string email)
         {
             var user = new User
             {
-                Email = string.Empty
+                Email = email
             };
 
             const string emailRequiredErrorMessage = "The Email is required.";
@@ -81,12 +83,15 @@ namespace simplebank.UnitTest.Domain.Entities
             Assert.Equal(invalidPhoneNumberFormatErrorMessage, exception.Message);
         }
 
-        [Fact]
-        public void PhoneNumberRequiredTest()
+        [Theory]
+        [InlineData(null)]
+        [InlineData("")]
+        [InlineData("    ")]
+        public void PhoneNumberRequiredTest(string phoneNumber)
         {
             var user = new User
             {
-                PhoneNumber = string.Empty
+                PhoneNumber = phoneNumber
             };
 
             const string phoneNumberRequiredErrorMessage = "The Phone Number is required.";
