@@ -21,6 +21,7 @@ namespace simplebank.Services
                 throw new ValidationException("User is null.");
 
             user.SetCreated();
+            user.Status = "CREATED";
             _userRepository.Add(user);
             await _userRepository.SaveChangesAsync();
             var response = await _userRepository.GetByIdAsync(user.Id);
@@ -30,8 +31,11 @@ namespace simplebank.Services
         public async Task<User> DeleteAsync(int id)
         {
             var user = await _userRepository.GetByIdAsync(id);
-            _userRepository.Remove(user);
-            await _userRepository.SaveChangesAsync();
+            if (user != null)
+            {
+                user.Status = "DELETED";
+                await _userRepository.SaveChangesAsync();
+            }
             return user;
         }
 

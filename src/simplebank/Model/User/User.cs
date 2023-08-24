@@ -39,6 +39,8 @@ namespace simplebank.Model
         [Required]
         public DateTime UpdatedAt { get; set; }
 
+        public string Status { get; set; }
+
         public ICollection<Transfer> SendTransfers { get; set; }
         public ICollection<Transfer> ReceiveTransfers { get; set; }
     }

@@ -24,6 +24,9 @@ namespace simplebank.Data
                 .HasIndex(user => user.PhoneNumber)
                 .IsUnique();
 
+            // Soft Delete dos Users
+            modelBuilder.Entity<User>().HasQueryFilter(u => u.Status != "DELETED");
+
             // Relação entre Transferencia e User (Remetente)
             modelBuilder.Entity<Transfer>()
                 .HasOne(transfer => transfer.FromUser)
