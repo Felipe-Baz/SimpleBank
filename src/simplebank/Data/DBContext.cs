@@ -24,10 +24,35 @@ namespace simplebank.Data
                 .HasIndex(user => user.Email)
                 .IsUnique();
             
+            // Define campo como required
+            modelBuilder.Entity<User>()
+                .Property(user => user.Email)
+                .IsRequired();
+            
             // Define campo unico
             modelBuilder.Entity<User>()
                 .HasIndex(user => user.PhoneNumber)
                 .IsUnique();
+            
+            // Define campo como required
+            modelBuilder.Entity<User>()
+                .Property(user => user.PhoneNumber)
+                .IsRequired();
+            
+            // Define campo como required
+            modelBuilder.Entity<User>()
+                .Property(user => user.Fullname)
+                .IsRequired();
+            
+            // Define campo como required
+            modelBuilder.Entity<Transfer>()
+                .Property(user => user.FromUserId)
+                .IsRequired();
+            
+            // Define campo como required
+            modelBuilder.Entity<Transfer>()
+                .Property(user => user.ToUserId)
+                .IsRequired();
 
             // Soft Delete dos Users
             modelBuilder.Entity<User>().HasQueryFilter(u => u.Status != "DELETED");
