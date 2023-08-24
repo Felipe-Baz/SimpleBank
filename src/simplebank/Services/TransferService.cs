@@ -19,6 +19,8 @@ namespace simplebank.Services
         {
             if (transfer == null)
                 throw new ValidationException("User is null.");
+            
+            Validate(transfer);
 
             transfer.SetCreated();
             _transferRepository.Add(transfer);
@@ -37,6 +39,13 @@ namespace simplebank.Services
         {
             var response = await _transferRepository.GetAllAsync();
             return response.ToList();
+        }
+
+        private static void Validate(Transfer transfer)
+        {
+            transfer.ValidateAmount();
+
+            transfer.ValidateFromTo();
         }
     }
 }

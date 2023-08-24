@@ -19,6 +19,8 @@ namespace simplebank.Services
         {
             if (user == null)
                 throw new ValidationException("User is null.");
+            
+            Validate(user);
 
             user.SetCreated();
             user.Status = "CREATED";
@@ -59,11 +61,23 @@ namespace simplebank.Services
 
         public async Task<User> UpdateAsync(User user)
         {
+            if (user == null)
+                throw new ValidationException("User is null.");
+            
+            Validate(user);
+
             user.SetUpdate();
             _userRepository.Update(user);
             await _userRepository.SaveChangesAsync();
             var response = await _userRepository.GetByIdAsync(user.Id);
             return response;
+        }
+
+        private static void Validate(User user)
+        {
+            user.ValidateEmail();
+
+            user.ValidatePhoneNumber();
         }
     }
 }
