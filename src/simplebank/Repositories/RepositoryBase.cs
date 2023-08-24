@@ -7,10 +7,10 @@ namespace simplebank.Repositories;
 public class RepositoryBase<TEntity> : IRepositoryBase<TEntity>
     where TEntity : class
 {
-    protected readonly UserContext DbContext;
+    protected readonly DBContext DbContext;
     protected readonly DbSet<TEntity> DbSet;
 
-    public RepositoryBase(UserContext context)
+    public RepositoryBase(DBContext context)
     {
         DbContext = context;
         DbSet = DbContext.Set<TEntity>();
