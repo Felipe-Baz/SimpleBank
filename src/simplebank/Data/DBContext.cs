@@ -11,6 +11,11 @@ namespace simplebank.Data
 
         public DbSet<User> Users { get; set; }
         public DbSet<Transfer> Transfers { get; set; }
+        
+        public User GetUserByIdWithDeleted(int userId)
+        {
+            return Users.IgnoreQueryFilters().FirstOrDefault(u => u.Id == userId);
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {   

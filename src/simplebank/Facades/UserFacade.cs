@@ -52,5 +52,12 @@ namespace simplebank.Facades
             var resultMapped = _mapper.Map<UserResponseDTO>(result);
             return resultMapped;
         }
+
+        public UserResponseDTO GetUserByIdWithDeleted(int id)
+        {
+            var result = _userService.GetUserByIdWithDeleted(id: id);
+            var resultMapped = _mapper.Map<UserResponseDTO>(result);
+            return resultMapped;
+        }
     }
 }

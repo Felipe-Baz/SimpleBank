@@ -45,6 +45,12 @@ namespace simplebank.Services
             return response;
         }
 
+        public User GetUserByIdWithDeleted(int id)
+        {
+            var response = _userRepository.GetUserByIdWithDeleted(id);
+            return response;
+        }
+
         public async Task<List<User>> ListAsync()
         {
             var response = await _userRepository.GetAllAsync();

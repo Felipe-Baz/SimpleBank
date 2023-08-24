@@ -6,5 +6,7 @@ namespace simplebank.Repositories.Interfaces
     {
         Task<User> GetByFilterAsync(UserFilter filter);
         Task<List<User>> GetListByFilterAsync(UserFilter filter);
+        
+        public User GetUserByIdWithDeleted(int userId);
     }
 }

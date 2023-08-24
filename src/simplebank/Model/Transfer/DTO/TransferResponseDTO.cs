@@ -6,7 +6,11 @@ namespace simplebank.Model
 
         public int FromUserId { get; set; }
 
+        public UserResponseDTO FromUser { get; set; }
+
         public int ToUserId { get; set; }
+
+        public UserResponseDTO ToUser { get; set; }
 
         public double Amount { get; set; }
 

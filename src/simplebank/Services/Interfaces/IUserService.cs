@@ -13,5 +13,7 @@ namespace simplebank.Services.Interfaces
         public Task<User> UpdateAsync(User user);
 
         public Task<User> DeleteAsync(int id);
+
+        public User GetUserByIdWithDeleted(int id);
     }
 }

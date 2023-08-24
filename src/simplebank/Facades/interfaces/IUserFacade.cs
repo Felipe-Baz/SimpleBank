@@ -13,5 +13,7 @@ namespace simplebank.Facades.interfaces
         public Task<UserResponseDTO> UpdateAsync(UserUpdateDTO user);
 
         public Task<UserResponseDTO> DeleteAsync(int id);
+
+        public UserResponseDTO GetUserByIdWithDeleted(int id);
     }
 }

@@ -31,6 +31,12 @@ namespace simplebank.Repositories
             return await query.ToListAsync();
         }
 
+        public User GetUserByIdWithDeleted(int userId)
+        {
+            var user = DbContext.GetUserByIdWithDeleted(userId);
+            return user;
+        }
+
         private static IQueryable<User> ApplyFilter(UserFilter filter,
         IQueryable<User> query)
         {
@@ -65,5 +71,6 @@ namespace simplebank.Repositories
 
             return query;
         }
+
     }
 }
