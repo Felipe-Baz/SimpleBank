@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using System.Net.Sockets;
 
 namespace simplebank.Model
 {
@@ -23,7 +22,7 @@ namespace simplebank.Model
         [Required(ErrorMessage = "O campo Rua é obrigatório!")]
         public string Street { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "O campo Número é obrigatório!")]
         [MaxLength(6, ErrorMessage = "O campo Número deve conter no máximo 6 caracteres.")]
         public string AddressNumber { get; set; }
 

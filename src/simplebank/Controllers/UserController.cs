@@ -9,14 +9,12 @@ namespace simplebank.Controllers
     [Route("api/v1/user")]
     public class UserController : ControllerBase
     {
-        private readonly ILogger<UserController> _logger;
         private readonly IUserFacade _userFacade;
 
         public UserController(
             ILogger<UserController> logger,
             IUserFacade userFacade
         ) {
-            _logger = logger;
             _userFacade = userFacade;
         }
 
@@ -37,7 +35,7 @@ namespace simplebank.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<User>>> ListAsync()
+        public async Task<ActionResult<List<UserResponseDTO>>> ListAsync()
         {
             try
             {
@@ -52,7 +50,7 @@ namespace simplebank.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> DetailsAsync(
+        public async Task<ActionResult<UserResponseDTO>> DetailsAsync(
             int id
         )
         {
@@ -69,7 +67,7 @@ namespace simplebank.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<User>> UpdateAsync(
+        public async Task<ActionResult<UserResponseDTO>> UpdateAsync(
             [FromBody] UserUpdateDTO user
         )
         {
@@ -86,7 +84,7 @@ namespace simplebank.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<User>> DeleteAsync(
+        public async Task<ActionResult<UserResponseDTO>> DeleteAsync(
             int id
         )
         {

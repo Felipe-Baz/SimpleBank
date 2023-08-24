@@ -5,24 +5,18 @@
 namespace simplebank.Migrations
 {
     /// <inheritdoc />
-    public partial class user_fullname : Migration
+    public partial class fix_transfer : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<string>(
-                name: "Fullname",
-                table: "Users",
-                type: "nvarchar(max)",
-                nullable: true);
+
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "Fullname",
-                table: "Users");
+
         }
     }
 }

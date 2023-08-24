@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using simplebank.Data;
 
@@ -10,10 +11,12 @@ using simplebank.Data;
 
 namespace simplebank.Migrations
 {
-    [DbContext(typeof(UserContext))]
-    partial class UserContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(DBContext))]
+    [Migration("20230823233828_fix_transfer")]
+    partial class fix_transfer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,6 +24,38 @@ namespace simplebank.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("simplebank.Model.Transfer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<double>("Amount")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("FromUserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ToUserId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FromUserId");
+
+                    b.HasIndex("ToUserId");
+
+                    b.ToTable("Transfers");
+                });
 
             modelBuilder.Entity("simplebank.Model.User", b =>
                 {
@@ -31,17 +66,14 @@ namespace simplebank.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("AddressNumber")
-                        .IsRequired()
                         .HasMaxLength(6)
                         .HasColumnType("nvarchar(6)");
 
                     b.Property<string>("Cep")
-                        .IsRequired()
                         .HasMaxLength(8)
                         .HasColumnType("nvarchar(8)");
 
                     b.Property<string>("City")
-                        .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
 
@@ -49,34 +81,27 @@ namespace simplebank.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Country")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("District")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Fullname")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("State")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Street")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("UpdatedAt")
@@ -85,6 +110,32 @@ namespace simplebank.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("simplebank.Model.Transfer", b =>
+                {
+                    b.HasOne("simplebank.Model.User", "FromUser")
+                        .WithMany("SendTransfers")
+                        .HasForeignKey("FromUserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("simplebank.Model.User", "ToUser")
+                        .WithMany("ReceiveTransfers")
+                        .HasForeignKey("ToUserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("FromUser");
+
+                    b.Navigation("ToUser");
+                });
+
+            modelBuilder.Entity("simplebank.Model.User", b =>
+                {
+                    b.Navigation("ReceiveTransfers");
+
+                    b.Navigation("SendTransfers");
                 });
 #pragma warning restore 612, 618
         }
