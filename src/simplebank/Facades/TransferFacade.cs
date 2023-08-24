@@ -43,7 +43,7 @@ namespace simplebank.Facades
 
         public async Task<List<TransferResponseDTO>> ListAsync()
         {
-            var result =  await _transferService.ListAsync();
+            var result = await _transferService.ListAsync();
             var resultMapped = _mapper.Map<List<TransferResponseDTO>>(result);
             foreach (var user in resultMapped)
             {
@@ -54,7 +54,7 @@ namespace simplebank.Facades
 
         private void SetUsers(TransferResponseDTO resultMapped)
         {
-            if (resultMapped != null)
+            if (resultMapped != null && (resultMapped.ToUser == null || resultMapped.FromUser == null))
             {
                 var fromUser = _userFacade.GetUserByIdWithDeleted(resultMapped.FromUserId);
                 var toUser = _userFacade.GetUserByIdWithDeleted(resultMapped.ToUserId);
