@@ -51,7 +51,7 @@ namespace simplebank.UnitTest.Application.Facades
                 UpdatedAt = DateTime.Parse("2023-08-24T00:17:47.1609811")
             };
 
-            var transferRequestDto = new TransferCreateDTO
+            var transferCreateDto = new TransferCreateDTO
             {
                 FromUserId = 1,
                 ToUserId = 2,
@@ -103,13 +103,13 @@ namespace simplebank.UnitTest.Application.Facades
             var mockService = new Mock<ITransferService>();
             var mockMapper = new Mock<IMapper>();
 
-            mockMapper.Setup(x => x.Map<Transfer>(transferRequestDto)).Returns(transfer);
+            mockMapper.Setup(x => x.Map<Transfer>(transferCreateDto)).Returns(transfer);
             mockMapper.Setup(x => x.Map<TransferResponseDTO>(transfer)).Returns(transferResponseDto);
 
             mockService.Setup(x => x.CreateAsync(transfer)).ReturnsAsync(transfer);
 
             var mockFacade = new TransferFacade(mockService.Object, mockMapper.Object);
-            var result = await mockFacade.CreateAsync(transferRequestDto);
+            var result = await mockFacade.CreateAsync(transferCreateDto);
 
             //Assert
             Assert.Equal(transferResponseDto, result);

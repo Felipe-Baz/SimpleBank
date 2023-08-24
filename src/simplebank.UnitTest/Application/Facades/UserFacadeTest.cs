@@ -26,7 +26,7 @@ namespace simplebank.UnitTest.Application.Facades
                 UpdatedAt = DateTime.Parse("2023-08-24T00:17:47.1609811")
             };
 
-            var userRequestDto = new UserCreateDTO
+            var userCreateDto = new UserCreateDTO
             {
                 Fullname = "test fullname",
                 Email = "test1@example.com",
@@ -62,13 +62,13 @@ namespace simplebank.UnitTest.Application.Facades
             var mockService = new Mock<IUserService>();
             var mockMapper = new Mock<IMapper>();
 
-            mockMapper.Setup(x => x.Map<User>(userRequestDto)).Returns(user);
+            mockMapper.Setup(x => x.Map<User>(userCreateDto)).Returns(user);
             mockMapper.Setup(x => x.Map<UserResponseDTO>(user)).Returns(userResponseDto);
 
             mockService.Setup(x => x.CreateAsync(user)).ReturnsAsync(user);
 
             var mockFacade = new UserFacade(mockService.Object, mockMapper.Object);
-            var result = await mockFacade.CreateAsync(userRequestDto);
+            var result = await mockFacade.CreateAsync(userCreateDto);
 
             //Assert
             Assert.Equal(userResponseDto, result);
@@ -254,7 +254,7 @@ namespace simplebank.UnitTest.Application.Facades
                 UpdatedAt = DateTime.Parse("2023-08-24T00:17:47.1609811")
             };
 
-            var userRequestDto = new UserUpdateDTO
+            var userUpdateDto = new UserUpdateDTO
             {
                 Id = 1,
                 Fullname = "test fullname Updated",
@@ -291,13 +291,13 @@ namespace simplebank.UnitTest.Application.Facades
             var mockService = new Mock<IUserService>();
             var mockMapper = new Mock<IMapper>();
 
-            mockMapper.Setup(x => x.Map<User>(userRequestDto)).Returns(user);
+            mockMapper.Setup(x => x.Map<User>(userUpdateDto)).Returns(user);
             mockMapper.Setup(x => x.Map<UserResponseDTO>(user)).Returns(userResponseDto);
 
             mockService.Setup(x => x.UpdateAsync(user)).ReturnsAsync(user);
 
             var mockFacade = new UserFacade(mockService.Object, mockMapper.Object);
-            var result = await mockFacade.UpdateAsync(userRequestDto);
+            var result = await mockFacade.UpdateAsync(userUpdateDto);
 
             //Assert
             Assert.Equal(userResponseDto, result);
